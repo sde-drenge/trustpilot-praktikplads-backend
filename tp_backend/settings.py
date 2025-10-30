@@ -12,9 +12,14 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import sys
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent
+
+APPS_DIR = BASE_DIR / "apps"
+print("APPS_DIR:", APPS_DIR)
+sys.path.insert(0, str(APPS_DIR))
 
 
 # Quick-start development settings - unsuitable for production
@@ -26,10 +31,15 @@ SECRET_KEY = 'django-insecure-*ptgd&)0owb79trrt5q35zkzz2z2&)vidmom5q6yjc!s1(74#6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
 
 
 # Application definition
+CUSTOM_APPS = [
+    "user",
+    "review",
+    "schools",
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -38,7 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
+] + CUSTOM_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -86,6 +96,8 @@ DATABASES = {
 }
 
 
+AUTH_USER_MODEL = "user.User"
+
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
@@ -116,6 +128,8 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "../"))
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

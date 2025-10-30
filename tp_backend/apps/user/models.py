@@ -81,7 +81,7 @@ def deleteUser(email):
     return True
 
 
-@receiver(pre_save, sender=User)
+""" @receiver(pre_save, sender=User)
 def ResetUserTokenWhenImportantFieldsChanges(sender, instance: User, **kwargs):
     if not instance.pk:
         return
@@ -107,4 +107,4 @@ def ResetUserTokenWhenImportantFieldsChanges(sender, instance: User, **kwargs):
     if shouldResetToken:
         if token:
             token.delete()
-            Token.objects.create(user=instance)
+            Token.objects.create(user=instance) """

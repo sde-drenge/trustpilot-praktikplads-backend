@@ -16,8 +16,8 @@ class UserAdmin(DjangoQLSearchMixin, BaseUserAdmin):
         "name",
     ]
     list_display = (
-        "name",
         "email",
+        "name",
         "createdAt",
     )
 
@@ -32,7 +32,6 @@ class UserAdmin(DjangoQLSearchMixin, BaseUserAdmin):
     )
 
     fieldsets = (
-        (None, {"fields": ("password",)}),
         (_("Personal info"), {"fields": ("name", "email")}),
         (
             _("Permissions"),

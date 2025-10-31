@@ -14,11 +14,42 @@ from pathlib import Path
 import os
 import sys
 
+from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives import serialization
+from dotenv import load_dotenv
+
+load_dotenv()
+
+REQUIRED_ENV_PROPETIES = [
+    {
+        "name": "DOMAIN",
+        "requiredIf": None,
+    },
+    {"name": "PATH_TO_PRIVATE_KEY", "requiredIf": None},
+    {"name": "PATH_TO_PUBLIC_KEY", "requiredIf": None},
+]
+
+DEFAULTSETTINGS = {}
+
+for prop in REQUIRED_ENV_PROPETIES:
+    if prop["name"] not in os.environ:
+        raise Exception(f"Missing required environment variable: {prop['name']}")
+    DEFAULTSETTINGS[prop["name"]] = os.getenv(prop["name"])
+
+    if prop["requiredIf"] is not None:
+        if os.getenv(prop["requiredIf"]) == prop["requiredIf"]:
+            for req in prop["followedRequirements"]:
+                if req not in os.environ:
+                    raise Exception(f"Missing required environment variable: {req}")
+                DEFAULTSETTINGS[req] = os.getenv(req)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent
 
 APPS_DIR = BASE_DIR / "apps"
-print("APPS_DIR:", APPS_DIR)
+TP_BACKEND_STATIC_DIR = BASE_DIR / "static"
+TP_BACKEND_STATIC_URL = "/resources/"
+STATIC_URL = "/admin-resources/"
 sys.path.insert(0, str(APPS_DIR))
 
 
@@ -48,6 +79,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
 ] + CUSTOM_APPS
 
 MIDDLEWARE = [
@@ -140,3 +173,45 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Private/Public Key Settings
+for file in [
+    {
+        "path": DEFAULTSETTINGS.get("PATH_TO_PUBLIC_KEY"),
+        "name": "PUBLIC_KEY",
+        "type": "public_key",
+    },
+    {
+        "path": DEFAULTSETTINGS.get("PATH_TO_PRIVATE_KEY"),
+        "name": "PRIVATE_KEY",
+        "type": "private_key",
+    },
+]:
+    try:
+        with open(file.get("path"), "rb") as key_file:
+            fileType = file.get("type")
+            if not fileType:
+                DEFAULTSETTINGS[file.get("name").replace("PATH_TO_", "")] = (
+                    key_file.read()
+                )
+                continue
+
+            if fileType == "public_key":
+                DEFAULTSETTINGS[file.get("name").replace("PATH_TO_", "")] = (
+                    serialization.load_pem_public_key(
+                        key_file.read(),
+                        backend=default_backend(),
+                    )
+                )
+
+            if fileType == "private_key":
+                DEFAULTSETTINGS[file.get("name").replace("PATH_TO_", "")] = (
+                    serialization.load_pem_private_key(
+                        key_file.read(),
+                        password=None,  # Use a password here if your private key is encrypted
+                        backend=default_backend(),
+                    )
+                )
+    except:
+        pass

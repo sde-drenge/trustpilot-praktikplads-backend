@@ -18,6 +18,14 @@ def get_urls():
         )
     )
     
+    urls.append(
+        re_path(
+            r"^login/$",
+            views.LoginView.as_view(),
+            name="login_view",
+        )
+    )
+
     return urls
 
 

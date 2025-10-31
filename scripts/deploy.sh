@@ -1,6 +1,3 @@
-#!/usr/bin/env bash
-set -euo pipefail
-
 # Simple deploy script: pull latest, build image, restart container.
 # Supports Docker and Podman. Configure via environment variables.
 

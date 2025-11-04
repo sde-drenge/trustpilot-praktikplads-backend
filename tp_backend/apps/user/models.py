@@ -24,7 +24,7 @@ class BaseModel(models.Model):
 
 class User(AbstractUser, BaseModel):
     username = None
-    email = models.EmailField(unique=True)
+    email = models.EmailField(unique=True, db_index=True)
     name = models.CharField(max_length=64, blank=True)
 
     isActive = models.BooleanField(default=True)
@@ -35,6 +35,14 @@ class User(AbstractUser, BaseModel):
         max_length=64,
         choices=Roles.choices,
         default=Roles.GUEST,
+    )
+    
+    
+    school = models.ForeignKey(
+        "schools.School",
+        on_delete=models.SET_NULL,
+        related_name="users",
+        null=True, blank=True
     )
 
 

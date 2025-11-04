@@ -52,6 +52,7 @@ class UserAdmin(DjangoQLSearchMixin, BaseUserAdmin):
                     "verificationEmailSentAt",
                     "verificationCode",
                     "role",
+                    "school"
                 )
             },
         ),

@@ -20,7 +20,7 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r /app/requirements
 COPY backend/ /app/backend/
 
 # Run from backend/
-WORKDIR /app/backend
+WORKDIR /app
 
 EXPOSE 2500
 

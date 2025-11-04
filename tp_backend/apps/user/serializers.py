@@ -1,7 +1,5 @@
-from django.utils.translation import gettext_lazy as _
 from rest_framework import serializers
 
-from .constants import Roles
 from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -49,7 +47,7 @@ class UserCreatorSerializer(UserSerializer):
         user: User | None = self.get_user(email)
         if user:
             raise serializers.ValidationError(
-                _("A user with this e-mail already exists. Try to login.")
+                "A user with this e-mail already exists. Try to login."
             )
 
         return email

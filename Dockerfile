@@ -7,17 +7,14 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV TZ=Europe/Copenhagen
 
-# Install system dependencies for psycopg2, Pillow, etc.
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libpq-dev \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
+# System deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential libpq-dev gcc \
+  && rm -rf /var/lib/apt/lists/*
 
-# Install Python dependencies
+# Python deps
 COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 # Copy project files into /app
 COPY . .
@@ -28,4 +25,7 @@ ENV PYTHONPATH=/app
 EXPOSE 2500
 
 # Run manage.py inside the trustpilot-praktikplads-backend folder
-CMD python trustpilot-praktikplads-backend/manage.py migrate --database=default && python trustpilot-praktikplads-backend/manage.py runserver 0.0.0.0:2500
+CMD ["sh", "-c", "\
+  python backend/manage.py migrate --database=default && \
+  python backend/manage.py runserver 0.0.0.0:2500 \
+"]

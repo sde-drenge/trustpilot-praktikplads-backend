@@ -16,8 +16,8 @@ WORKDIR /app
 COPY requirements.txt /app/requirements.txt
 RUN pip install --upgrade pip && pip install --no-cache-dir -r /app/requirements.txt
 
-# Run from backend/
-WORKDIR /app
+# Copy application code
+COPY . /app/
 
 EXPOSE 2500
 

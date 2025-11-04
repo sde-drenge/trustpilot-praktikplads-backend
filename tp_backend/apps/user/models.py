@@ -3,9 +3,6 @@ import uuid
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-""" from django.db.models.signals import pre_save
-from django.dispatch import receiver
-from rest_framework.authtoken.models import Token """
 
 from .constants import Roles
 
@@ -87,32 +84,3 @@ def deleteUser(email):
     user.isActive = False
     user.save()
     return True
-
-
-""" @receiver(pre_save, sender=User)
-def ResetUserTokenWhenImportantFieldsChanges(sender, instance: User, **kwargs):
-    if not instance.pk:
-        return
-
-    oldUser = User.objects.filter(pk=instance.pk).first()
-    if not oldUser:
-        return
-
-    token = Token.objects.filter(user=instance).first()
-    shouldResetToken = False
-    if oldUser.isActive != instance.isActive:
-        shouldResetToken = True
-
-    if oldUser.role != instance.role:
-        shouldResetToken = True
-
-    if oldUser.email != instance.email:
-        shouldResetToken = True
-
-    if oldUser.password != instance.password:
-        shouldResetToken = True
-
-    if shouldResetToken:
-        if token:
-            token.delete()
-            Token.objects.create(user=instance) """

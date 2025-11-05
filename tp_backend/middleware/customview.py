@@ -2,9 +2,11 @@ from django.conf import settings
 from ..apps.user.permissions import UserPermissions
 
 from .decrypter import RequestTimeLoggingMiddleware
+from user.auth import CustomTokenAuthentication
 
 
 class CustomAPIView(UserPermissions, RequestTimeLoggingMiddleware):
+    authentication_classes = (CustomTokenAuthentication,)
     authenticationRequired = True
     roleNeeded = None
     noPermissionForMethods = []

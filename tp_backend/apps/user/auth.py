@@ -69,7 +69,7 @@ class CustomTokenAuthentication(authentication.BaseAuthentication):
             msg = "Invalid Token"
             raise exceptions.AuthenticationFailed(msg)
 
-        if user.deleted_at is not None:
+        if user.deletedAt is not None:
             msg = "This user has been deleted. Please contact support for more information"
             raise exceptions.AuthenticationFailed(msg)
 

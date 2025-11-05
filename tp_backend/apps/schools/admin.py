@@ -45,10 +45,13 @@ class SchoolAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ("General info", {
-            "fields": ("uuid_hex", "name", "domain"),
+            "fields": ("uuid_hex", "name", "domain", "isActive", "description"),
         }),
         ("Counts", {
             "fields": ("student_count", "teacher_count"),
+        }),
+        ("Dates", {
+            "fields": ("createdAt", "updatedAt"),
         }),
     )
     

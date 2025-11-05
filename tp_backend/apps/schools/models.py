@@ -8,6 +8,7 @@ User = get_user_model()
 class School(BaseModel):
     name = models.CharField(max_length=255)
     domain = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True, null=True)
     isActive = models.BooleanField(default=True)
     
 

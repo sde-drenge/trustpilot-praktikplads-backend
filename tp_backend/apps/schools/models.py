@@ -9,6 +9,12 @@ class School(BaseModel):
     name = models.CharField(max_length=255)
     domain = models.CharField(max_length=255, unique=True)
     description = models.TextField(blank=True, null=True)
+    owner = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name="owned_schools"
+    )
+    createdBy = models.ForeignKey(
+        User, on_delete=models.SET_NULL, null=True, related_name="created_schools"
+    )
     isActive = models.BooleanField(default=True)
     
 

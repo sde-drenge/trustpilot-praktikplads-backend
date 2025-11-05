@@ -47,11 +47,11 @@ class SchoolAdmin(admin.ModelAdmin):
         ("General info", {
             "fields": ("uuid_hex", "name", "domain", "isActive", "description"),
         }),
-        ("Counts", {
-            "fields": ("student_count", "teacher_count"),
-        }),
         ("Dates", {
             "fields": ("createdAt", "updatedAt"),
+        }),
+        ("Counts", {
+            "fields": ("student_count", "teacher_count"),
         }),
     )
     
@@ -76,7 +76,7 @@ class SchoolAdmin(admin.ModelAdmin):
     
 
 
-    readonly_fields = ("uuid_hex", "student_count", "teacher_count")
+    readonly_fields = ("uuid_hex", "student_count", "teacher_count", "createdAt", "updatedAt")
     
     def uuid_hex(self, obj):
         return obj.uuid.hex

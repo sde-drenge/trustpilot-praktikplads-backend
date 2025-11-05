@@ -16,6 +16,14 @@ def get_urls():
             name="get_specific_school_view",
         )
     )
+    
+    urls.append(
+        re_path(
+            r"^create-school/$",
+            views.CreateSchool.as_view(),
+            name="create_school_view",
+        )
+    )
 
     return urls
 

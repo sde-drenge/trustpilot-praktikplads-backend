@@ -19,3 +19,4 @@ class Roles:
     
     accessToCreateSchools = [ADMIN]
     
+    accesstoCreateCompanies = [ADMIN]

@@ -70,6 +70,7 @@ CUSTOM_APPS = [
     "user",
     "review",
     "schools",
+    "company",
 ]
 
 INSTALLED_APPS = [

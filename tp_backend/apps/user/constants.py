@@ -15,4 +15,7 @@ class Roles:
 
     accessToRemoveReviews = [ADMIN]
     accessToCreateReviews = [STUDENT]
+    canGetStudentFromReview = [ADMIN, TEACHER]
+    
     accessToCreateSchools = [ADMIN]
+    

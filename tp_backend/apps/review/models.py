@@ -10,3 +10,4 @@ class Review(BaseModel):
     content = models.TextField(max_length=500)
     rating = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     isApproved = models.BooleanField(default=True)
+    company = models.ForeignKey("company.Company", on_delete=models.CASCADE, related_name="reviews", null=True)

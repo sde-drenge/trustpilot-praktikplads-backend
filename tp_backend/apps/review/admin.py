@@ -10,7 +10,7 @@ class ReviewAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ("General info", {
-            "fields": ("uuid_hex", "title", "student", "content", "rating", "isApproved"),
+            "fields": ("uuid_hex", "company", "title", "student", "content", "rating", "isApproved"),
         }),
         ("Dates", {
             "fields": ("createdAt", "updatedAt"),

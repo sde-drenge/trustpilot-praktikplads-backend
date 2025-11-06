@@ -2,7 +2,6 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.core.validators import MaxValueValidator, MinValueValidator 
 from user.serializers import UserSerializer
-from user.constants import Roles
  
 
 from .models import Review
